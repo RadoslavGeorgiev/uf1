@@ -101,11 +101,20 @@ function uf_clone_array( $array ) {
  *
  * @since 1.1
  */
-// add_action( 'admin_notices', 'uf_notify_qtranslate_support' );
-// function uf_notify_qtranslate_support() {
-// 		var_dump(get_plugins()); exit;
-// }
-//
-// add_filter( 'transient_update_plugins', function( $updates ) {
-// 	print_r( $updates ); exit;
-// }, 300);
+add_action( 'admin_notices', 'uf_notify_qtranslate_support' );
+function uf_notify_qtranslate_support() {
+	if( ! get_option( 'uf_multilingual' ) ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+	if( ! in_array( $screen->id, array( 'ultimatefields', 'edit-ultimatefields' ) ) ) {
+		return;
+	}
+
+	?>
+	<div class="notice notice-warning">
+		<?php echo wpautop( sprintf( __( 'The next big version of Ultimate Fields will be released in the fall and the support for multilingual fields will be removed. If you are using multilingual fields, please read <a href="%s" target="_blank">this article</a>.', 'uf' ), 'https://rageorgiev.com/blog/2017/06/28/ultimate-fields-multilingual-support-will-removed/' ) ) ?>
+	</div>
+	<?php
+}

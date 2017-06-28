@@ -73,11 +73,3 @@ register_activation_hook( __FILE__, 'uf_activated' );
 function uf_activated() {
 	add_option( 'uf_activated', true );
 }
-
-add_action( 'uf_setup', function() {
-	UF_Options::factory( 'Some page' )
-		->add_fields(array(
-			UF_Field::factory( 'text', 'required_field' )
-				->make_required()
-		));
-});
